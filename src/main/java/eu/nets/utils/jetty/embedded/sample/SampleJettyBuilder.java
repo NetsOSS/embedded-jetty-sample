@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.EventListener;
 
 import static com.google.common.base.Throwables.propagate;
-import static eu.nets.utils.jetty.embedded.EmbeddedSpringBuilder.createMessageDispatcherServlet;
+import static eu.nets.utils.jetty.embedded.EmbeddedSpringWsBuilder.createMessageDispatcherServlet;
 import static eu.nets.utils.jetty.embedded.EmbeddedSpringBuilder.createSpringContextLoader;
 import static eu.nets.utils.jetty.embedded.EmbeddedWicketBuilder.addWicketHandler;
 
