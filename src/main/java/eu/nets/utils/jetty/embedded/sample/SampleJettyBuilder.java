@@ -30,7 +30,7 @@ public class SampleJettyBuilder extends EmbeddedJettyBuilder {
     }
 
     public static SampleJettyBuilder build(ContextPathConfig context, boolean serverMode, Class springConfigurationClass) {
-        return new SampleJettyBuilder(context, !serverMode, EmbeddedSpringBuilder.createApplicationContext(springConfigurationClass, "VAS Core Application Context"));
+        return new SampleJettyBuilder(context, !serverMode, EmbeddedSpringBuilder.createApplicationContext("VAS Core Application Context", springConfigurationClass));
     }
 
     public SampleJettyBuilder startStandardServices(Class<? extends WebApplication> wicketApplication) {
