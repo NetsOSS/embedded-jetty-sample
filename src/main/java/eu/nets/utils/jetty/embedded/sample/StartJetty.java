@@ -1,37 +1,31 @@
 package eu.nets.utils.jetty.embedded.sample;
 
 
-import eu.nets.utils.jetty.embedded.PropertiesFileAppSource;
-import eu.nets.utils.jetty.embedded.StdoutRedirect;
+import eu.nets.utils.jetty.embedded.*;
 
-import static eu.nets.utils.jetty.embedded.sample.SampleJettyBuilder.devEnv;
-import static eu.nets.utils.jetty.embedded.sample.SampleJettyBuilder.server;
+import static eu.nets.utils.jetty.embedded.sample.SampleJettyBuilder.build;
 
 public class StartJetty {
     public static void main(String... args) {
 
-        final SampleJettyBuilder sampleJettyBuilder;
+        boolean onServer = EmbeddedJettyBuilder.isStartedWithAppassembler();
 
-        if (isRunningOnServer()){
+        ContextPathConfig webAppSource = onServer ? new PropertiesFileConfig() : new StaticConfig("/sample", 8080);
+
+        final SampleJettyBuilder builder = build(webAppSource, onServer, ApplicationConfiguration.class);
+
+        if (onServer){
             StdoutRedirect.tieSystemOutAndErrToLog();
-            PropertiesFileAppSource webAppSource = new PropertiesFileAppSource();
-            sampleJettyBuilder = server(webAppSource.getContextPath(), webAppSource.getPort(), ApplicationConfiguration.class);
-            sampleJettyBuilder.addHttpAccessLog();
-        } else {
-            sampleJettyBuilder = devEnv("/vas", 8080, ApplicationConfiguration.class);
+            builder.addHttpAccessLogAtRoot();
         }
 
-        sampleJettyBuilder.startStandardServices(SampleWicketApplication.class);
+        builder.startStandardServices(SampleWicketApplication.class);
 
-        if (!isRunningOnServer()){
-            String url = "/homePage";
+        if (!onServer){
+            String url = "/wicket/homePage";
             //url = "/res/static/StartEnrol.html";
-            sampleJettyBuilder.startBrowserStopWithAnyKey(url);
+            builder.startBrowserStopWithAnyKey(url);
         }
-    }
-
-    private static boolean isRunningOnServer(){
-        return System.getProperty("app.home") != null;  // Started with appassembly
     }
 }
 
