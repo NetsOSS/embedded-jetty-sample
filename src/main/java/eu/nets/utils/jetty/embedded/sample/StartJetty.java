@@ -24,7 +24,7 @@ public class StartJetty {
         sampleJettyBuilder.startStandardServices(SampleWicketApplication.class);
 
         if (!isRunningOnServer()){
-            String url = "/portal/cspHomePage?user=csp1&password=csp1";
+            String url = "/homePage";
             //url = "/res/static/StartEnrol.html";
             sampleJettyBuilder.startBrowserStopWithAnyKey(url);
         }

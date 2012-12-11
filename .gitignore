@@ -2,11 +2,8 @@
 .idea
 target
 *.releasebackup
-vas-server-simulator/chromedriver.log
 *.ser
-vas-simualtor-war/*.ser
 *.log
 data/*.xml
-Xpp3Dom
 logs
 
