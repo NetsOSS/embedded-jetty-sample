@@ -55,7 +55,8 @@ public class SampleJettyBuilder extends EmbeddedJettyBuilder {
     public SampleJettyBuilder addWebservices(EventListener springContextLoader) {
         createRootServletContextHandler("")
                 .addEventListener(springContextLoader)
-                .addServlet(createMessageDispatcherServlet(WsServletConfiguration.class), "/helloService.wsdl")
+                .addServlet(createMessageDispatcherServlet(WsServletConfiguration.class))
+                  .mountAtPath("/helloService.wsdl")
                   .mountAtPath("/helloService");
         return this;
     }
