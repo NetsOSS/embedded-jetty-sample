@@ -1,5 +1,6 @@
 package eu.nets.utils.jetty.embedded.sample;
 
+import eu.nets.utils.jetty.embedded.ClasspathResourceHandler;
 import eu.nets.utils.jetty.embedded.ContextPathConfig;
 import eu.nets.utils.jetty.embedded.EmbeddedJettyBuilder;
 import eu.nets.utils.jetty.embedded.EmbeddedSpringBuilder;
@@ -41,7 +42,8 @@ public class SampleJettyBuilder extends EmbeddedJettyBuilder {
         addKeystore(10000);
         addWebservices(springContextLoader);
         createStandardClasspathResourceHandler("/res");
-        addWicketHandler(this, "/wicket", springContextLoader, wicketApplication, true);
+        ClasspathResourceHandler classpathResourceHandler = new ClasspathResourceHandler("/webapp", true);
+        addWicketHandler(this, "/wicket", springContextLoader, wicketApplication, classpathResourceHandler, true);
         try {
             startJetty();
             verifyServerStartup();
