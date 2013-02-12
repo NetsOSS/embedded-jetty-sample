@@ -34,10 +34,14 @@ public class StartJetty {
                         .mountAtPath("/helloService.wsdl")
                         .mountAtPath("/helloService");
 
-        builder.createStandardClasspathResourceHandler("/res"); // Alt 1: put it anywhere
+
+        // Option 1: Separate context
+        ClasspathResourceHandler rh1 = builder.createNetsStandardClasspathResourceHandler();
+        builder.createRootServletContextHandler("/res").setResourceHandler(rh1);
+
         // Alt 2: Put resource handler on same path as wicket
-        ClasspathResourceHandler classpathResourceHandler = new ClasspathResourceHandler("/webapp", true);
-        addWicketHandler(builder, "/wicket", springContextLoader, SampleWicketApplication.class, classpathResourceHandler, true);
+        ClasspathResourceHandler rh2 = builder.createNetsStandardClasspathResourceHandler();
+        addWicketHandler(builder, "/wicket", springContextLoader, SampleWicketApplication.class, true).setResourceHandler(rh2);
         try {
             builder.startJetty();
             builder.verifyServerStartup();
