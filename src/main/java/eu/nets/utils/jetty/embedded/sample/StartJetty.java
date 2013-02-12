@@ -2,8 +2,14 @@ package eu.nets.utils.jetty.embedded.sample;
 
 
 import eu.nets.utils.jetty.embedded.*;
+import org.springframework.web.context.WebApplicationContext;
 
-import static eu.nets.utils.jetty.embedded.sample.SampleJettyBuilder.build;
+import java.util.EventListener;
+
+import static com.google.common.base.Throwables.propagate;
+import static eu.nets.utils.jetty.embedded.EmbeddedSpringBuilder.createSpringContextLoader;
+import static eu.nets.utils.jetty.embedded.EmbeddedSpringWsBuilder.createMessageDispatcherServlet;
+import static eu.nets.utils.jetty.embedded.EmbeddedWicketBuilder.addWicketHandler;
 
 public class StartJetty {
     public static void main(String... args) {
@@ -11,19 +17,37 @@ public class StartJetty {
         boolean onServer = EmbeddedJettyBuilder.isStartedWithAppassembler();
 
         ContextPathConfig webAppSource = onServer ? new PropertiesFileConfig() : new StaticConfig("/sample", 8080);
-
-        final SampleJettyBuilder builder = build(webAppSource, onServer, ApplicationConfiguration.class);
+        final EmbeddedJettyBuilder builder = new EmbeddedJettyBuilder(webAppSource, !onServer);
 
         if (onServer){
             StdoutRedirect.tieSystemOutAndErrToLog();
             builder.addHttpAccessLogAtRoot();
         }
 
-        builder.startStandardServices(SampleWicketApplication.class);
+        WebApplicationContext ctx = EmbeddedSpringBuilder.createApplicationContext("VAS Core Application Context", ApplicationConfiguration.class);
+        EventListener springContextLoader = createSpringContextLoader(ctx);
+        builder.addKeystore(10000);
+
+        builder.createRootServletContextHandler("")
+                .addEventListener(springContextLoader)
+                    .addServlet(createMessageDispatcherServlet(WsServletConfiguration.class))
+                        .mountAtPath("/helloService.wsdl")
+                        .mountAtPath("/helloService");
+
+        builder.createStandardClasspathResourceHandler("/res"); // Alt 1: put it anywhere
+        // Alt 2: Put resource handler on same path as wicket
+        ClasspathResourceHandler classpathResourceHandler = new ClasspathResourceHandler("/webapp", true);
+        addWicketHandler(builder, "/wicket", springContextLoader, SampleWicketApplication.class, classpathResourceHandler, true);
+        try {
+            builder.startJetty();
+            builder.verifyServerStartup();
+        } catch (Exception e) {
+            //noinspection ThrowableResultOfMethodCallIgnored
+            propagate(e);
+        }
 
         if (!onServer){
             String url = "/wicket/homePage";
-            //url = "/res/static/StartEnrol.html";
             builder.startBrowserStopWithAnyKey(url);
         }
     }
