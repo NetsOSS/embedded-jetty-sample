@@ -21,7 +21,12 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public SimpleWsdl11Definition helloService() {
+    public SimpleWsdl11Definition helloServiceWsdl() {
         return new SimpleWsdl11Definition(new ClassPathResource("myService.wsdl"));
+    }
+
+    @Bean
+    public HelloService helloService(){
+        return new DefaultHelloService();
     }
 }

@@ -43,7 +43,7 @@ public class StartJetty {
         ClasspathResourceHandler rh2 = builder.createNetsStandardClasspathResourceHandler();
         EmbeddedJettyBuilder.ServletContextHandlerBuilder servletContextHandlerBuilder = addWicketHandler(builder, "/wicket", springContextLoader, SampleWicketApplication.class, true);
         // Temporary disabled while we're waiting for the outcome of a jetty bug on this
-        // servletContextHandlerBuilder.setResourceHandler(rh2);
+        //servletContextHandlerBuilder.setResourceHandler(rh2);
         try {
             builder.startJetty();
             builder.verifyServerStartup();
