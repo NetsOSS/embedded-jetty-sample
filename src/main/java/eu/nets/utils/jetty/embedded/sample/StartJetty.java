@@ -16,7 +16,7 @@ public class StartJetty {
 
         boolean onServer = EmbeddedJettyBuilder.isStartedWithAppassembler();
 
-        ContextPathConfig webAppSource = onServer ? new PropertiesFileConfig() : new StaticConfig("/sample", 8080);
+        ContextPathConfig webAppSource = onServer ? new PropertiesFileConfig() : new StaticConfig("/jettySample", 8080);
         final EmbeddedJettyBuilder builder = new EmbeddedJettyBuilder(webAppSource, !onServer);
 
         if (onServer){
@@ -41,7 +41,9 @@ public class StartJetty {
 
         // Alt 2: Put resource handler on same path as wicket
         ClasspathResourceHandler rh2 = builder.createNetsStandardClasspathResourceHandler();
-        addWicketHandler(builder, "/wicket", springContextLoader, SampleWicketApplication.class, true).setResourceHandler(rh2);
+        EmbeddedJettyBuilder.ServletContextHandlerBuilder servletContextHandlerBuilder = addWicketHandler(builder, "/wicket", springContextLoader, SampleWicketApplication.class, true);
+        // Temporary disabled while we're waiting for the outcome of a jetty bug on this
+        // servletContextHandlerBuilder.setResourceHandler(rh2);
         try {
             builder.startJetty();
             builder.verifyServerStartup();
