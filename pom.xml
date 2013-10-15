@@ -114,7 +114,8 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <descriptors>
+                          <appendAssemblyId>false</appendAssemblyId> <!-- Needed for install.sh -->
+                          <descriptors>
                                 <descriptor>assembly.xml</descriptor>
                             </descriptors>
                         </configuration>
