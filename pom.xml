@@ -99,6 +99,10 @@
                                         <platform>booter-unix</platform>
                                         <platform>booter-windows</platform>
                                     </platforms>
+                                  <jvmSettings>
+                                    <initialMemorySize>64M</initialMemorySize>
+                                    <maxMemorySize>128M</maxMemorySize>
+                                  </jvmSettings>
                                 </daemon>
                             </daemons>
                         </configuration>
