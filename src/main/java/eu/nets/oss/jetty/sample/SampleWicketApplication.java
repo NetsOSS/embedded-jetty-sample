@@ -1,4 +1,4 @@
-package eu.nets.utils.jetty.embedded.sample;
+package eu.nets.oss.jetty.sample;
 
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.servlet.ServletWebRequest;

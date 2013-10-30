@@ -1,4 +1,4 @@
-package eu.nets.utils.jetty.embedded.sample;
+package eu.nets.oss.jetty.sample;
 
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;

@@ -1,4 +1,4 @@
-package eu.nets.utils.jetty.embedded.sample;
+package eu.nets.oss.jetty.sample;
 
 /**
  * @author Kristian Rosenvold

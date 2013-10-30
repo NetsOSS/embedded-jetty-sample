@@ -1,4 +1,4 @@
-package eu.nets.utils.jetty.embedded.sample;
+package eu.nets.oss.jetty.sample;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;

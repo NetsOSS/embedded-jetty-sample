@@ -94,7 +94,7 @@
                             <daemons>
                                 <daemon>
                                     <id>startapp</id>
-                                    <mainClass>eu.nets.utils.jetty.embedded.sample.StartJetty</mainClass>
+                                    <mainClass>eu.nets.oss.jetty.sample.StartJetty</mainClass>
                                     <platforms>
                                         <platform>booter-unix</platform>
                                         <platform>booter-windows</platform>
