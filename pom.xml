@@ -4,18 +4,18 @@
     <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>eu.nets.utils.maven</groupId>
-    <artifactId>distributionmanagement-pom</artifactId>
-    <version>1.0.0</version>
+     <groupId>eu.nets.oss.maven</groupId>
+     <artifactId>nets-oss-parent</artifactId>
+     <version>2-SNAPSHOT</version>
   </parent>
 
-  <groupId>eu.nets.utils.jetty</groupId>
+  <groupId>eu.nets.oss.jetty</groupId>
     <artifactId>embedded-jetty-sample</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <packaging>jar</packaging>
     <name>embedded-jetty-sample</name>
-    <description>A sample spring and wicket application that can be used with embeddedjetty</description>
+    <description>A sample spring and wicket application that can be used with embedded-jetty</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -140,7 +140,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>eu.nets.utils.jetty</groupId>
+            <groupId>eu.nets.oss.jetty</groupId>
             <artifactId>embedded-jetty</artifactId>
             <version>1.1.1</version>
         </dependency>
