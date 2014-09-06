@@ -1,7 +1,10 @@
 language: java
 jdk:
-  - oraclejdk7
+- oraclejdk7
 deploy:
   provider: heroku
   api_key:
-    secure: XcRG0YMx2VrQcTFHzrKyvIOI4Hjd4iSxgdekEidYP7DYFjA0w0TlRh+ag0CKcYgXXFenCJSkmM/XobsMGFZto1yWSJRrF2LuV7DsvrwXW6WZNbyXzNSjiQi3/zM4yVro84+OydFqumS3jBCSUgfl7fAq5dkQ5yFbPCwwr+Wli0M=
+    secure: JptpsY/h9/L9FO2L78onvMXOFolPW0nR0Ksm1Bu9NaXSk3xb93fHmGYf10lFQU7bAxkcmeGQEAY/ZLCviCNG6o3XrQP6KGR2NahC8JO96Wen9dezaJxPniqRLUrwbri/rPNr3TOf0rFqtBGU25MYFXtq53xvq8Ui7NrHAeMnNA0=
+  app: netsoss-embedded-jetty-sample
+  on:
+    repo: NetsOSS/embedded-jetty-sample
