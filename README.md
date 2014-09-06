@@ -1,5 +1,6 @@
 Using the embedded Jetty Sample
 ===============================
+![travis-ci status](https://travis-ci.org/NetsOSS/embedded-jetty-sample.svg?branch=master)
 
 1. Clone the project
 
@@ -12,7 +13,7 @@ Running example
 
 The latest version of the sample application is running at Heroku:
 
-[http://netsoss-embedded-jetty-sample.herokuapp.com/jettySample/wicket/homePage]
+http://netsoss-embedded-jetty-sample.herokuapp.com/jettySample/wicket/homePage
 
 Enjoy!
 
