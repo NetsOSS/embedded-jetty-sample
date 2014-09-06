@@ -1,8 +1,13 @@
 package eu.nets.oss.jetty.sample;
 
 
+import eu.nets.oss.jetty.ClasspathResourceHandler;
+import eu.nets.oss.jetty.ContextPathConfig;
 import eu.nets.oss.jetty.EmbeddedJettyBuilder;
-import eu.nets.oss.jetty.*;
+import eu.nets.oss.jetty.EmbeddedSpringBuilder;
+import eu.nets.oss.jetty.PropertiesFileConfig;
+import eu.nets.oss.jetty.StaticConfig;
+import eu.nets.oss.jetty.StdoutRedirect;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.EventListener;
@@ -19,15 +24,14 @@ public class StartJetty {
 
         ContextPathConfig config;
         if (onServer) {
-            System.setProperty("port", System.getProperty("PORT")); // Heroku fix.
-            config = new PropertiesFileConfig();
+            config = new HerokuConfig(new PropertiesFileConfig());
         } else {
             config = new StaticConfig("/jettySample", 8080);
         }
 
         final EmbeddedJettyBuilder builder = new EmbeddedJettyBuilder(config, !onServer);
 
-        if (onServer){
+        if (onServer) {
             StdoutRedirect.tieSystemOutAndErrToLog();
             builder.addHttpAccessLogAtRoot();
         }
@@ -38,9 +42,9 @@ public class StartJetty {
 
         builder.createRootServletContextHandler("/ws")
                 .addEventListener(springContextLoader)
-                    .addServlet(createMessageDispatcherServlet(WsServletConfiguration.class))
-                        .mountAtPath("/helloService.wsdl")
-                        .mountAtPath("/helloService");
+                .addServlet(createMessageDispatcherServlet(WsServletConfiguration.class))
+                .mountAtPath("/helloService.wsdl")
+                .mountAtPath("/helloService");
 
 
         // Option 1: Separate context
@@ -60,11 +64,34 @@ public class StartJetty {
             propagate(e);
         }
 
-        if (!onServer){
+        if (!onServer) {
             String url = "/wicket/homePage";
             builder.startBrowserStopWithAnyKey(url);
         }
     }
+
+    private static class HerokuConfig implements ContextPathConfig {
+
+        private final PropertiesFileConfig delegate;
+
+        private HerokuConfig(PropertiesFileConfig delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public String getContextPath() {
+            return delegate.getContextPath();
+        }
+
+        @Override
+        public int getPort() {
+
+            String port = System.getenv("PORT");
+
+            return port == null ? delegate.getPort() : Integer.parseInt(port);
+        }
+    }
+
 }
 
 
