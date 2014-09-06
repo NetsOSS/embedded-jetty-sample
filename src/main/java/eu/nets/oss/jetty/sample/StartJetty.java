@@ -17,8 +17,15 @@ public class StartJetty {
 
         boolean onServer = EmbeddedJettyBuilder.isStartedWithAppassembler();
 
-        ContextPathConfig webAppSource = onServer ? new PropertiesFileConfig() : new StaticConfig("/jettySample", 8080);
-        final EmbeddedJettyBuilder builder = new EmbeddedJettyBuilder(webAppSource, !onServer);
+        ContextPathConfig config;
+        if (onServer) {
+            System.setProperty("port", System.getProperty("PORT")); // Heroku fix.
+            config = new PropertiesFileConfig();
+        } else {
+            config = new StaticConfig("/jettySample", 8080);
+        }
+
+        final EmbeddedJettyBuilder builder = new EmbeddedJettyBuilder(config, !onServer);
 
         if (onServer){
             StdoutRedirect.tieSystemOutAndErrToLog();
