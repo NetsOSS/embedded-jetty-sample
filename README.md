@@ -13,7 +13,7 @@ Running example
 
 The latest version of the sample application is running at Heroku:
 
-http://netsoss-embedded-jetty-sample.herokuapp.com/jettySample/wicket/homePage
+http://netsoss-embedded-jetty-sample.herokuapp.com/jetty/wicket/homePage
 
 Enjoy!
 
